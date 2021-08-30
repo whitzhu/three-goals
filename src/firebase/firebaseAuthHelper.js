@@ -1,7 +1,13 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+
+const auth = getAuth();
 
 export const login = () => {
-  const auth = getAuth();
   const provider = new GoogleAuthProvider();
   auth.useDeviceLanguage();
   signInWithPopup(auth, provider).then(({ additionalUserInfo, user }) => {
@@ -14,3 +20,5 @@ export const login = () => {
     //   }
   });
 };
+
+export const logout = () => signOut(auth);
