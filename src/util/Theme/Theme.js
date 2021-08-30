@@ -3,10 +3,10 @@ import { createTheme } from "@material-ui/core/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#fafafa",
+      main: "#263238",
     },
     secondary: {
-      main: "#263238",
+      main: "#fff",
     },
     error: {
       main: "#dd2c00",
@@ -28,6 +28,9 @@ const theme = createTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(","),
+    h1: {
+      fontSize: "2.4rem",
+    },
   },
 });
 
