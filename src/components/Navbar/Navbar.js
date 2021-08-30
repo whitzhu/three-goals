@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar({ user }) {
   const classes = useStyles();
 
   return (
@@ -37,7 +38,9 @@ export default function NavBar() {
           <Typography variant="h6" className={classes.title}>
             THREE GOALS
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={() => {}}>
+            {user == null ? "Login" : <AccountCircleIcon />}
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
