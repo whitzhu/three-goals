@@ -4,13 +4,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import NavBar from "../Navbar/Navbar";
 import theme from "../../util/Theme/Theme";
 import Routes from "../Routes/Routes";
-import { getAuth } from "firebase/auth";
-import { app } from "../../firebase/firebaseConfig";
+import { auth } from "../../firebase/firebaseConfig";
 
 function App() {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    getAuth().onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       setUser(user);
     });
   });
