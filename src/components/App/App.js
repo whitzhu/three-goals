@@ -1,11 +1,16 @@
-import NavBar from "../Navbar/Navbar";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter as Router } from "react-router-dom";
+import NavBar from "../Navbar/Navbar";
 import theme from "../../util/Theme/Theme";
+import Routes from "../Routes/Routes";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
+      <Router>
+        <NavBar />
+        <Routes />
+      </Router>
     </ThemeProvider>
   );
 }
