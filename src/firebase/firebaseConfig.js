@@ -1,6 +1,7 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 //reference for firestore: https://react-firebase-js.com/docs/react-firestore-database/getting-started
 const firebaseConfig = {
@@ -15,6 +16,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 getAnalytics(app);
+const db = getFirestore();
 
 const auth = getAuth();
-export { auth };
+export { auth, db };

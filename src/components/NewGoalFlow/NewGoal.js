@@ -1,6 +1,11 @@
 import { Box, Button, Divider, TextField, Typography } from "@material-ui/core";
+import { saveThreeYearGoal } from "../../firebase/firebaseGoalHelper";
 
-export default function NewGoal() {
+export default function NewGoal({ user }) {
+  const handleOnNextClick = () => {
+    saveThreeYearGoal(user.uid, "Move to NYC", "Life Is Great");
+  };
+
   return (
     <Box display="flex" flexDirection="column" mr={2} ml={2} mt={4} mb={4}>
       <Box mb={2}>
@@ -44,7 +49,12 @@ export default function NewGoal() {
         <Divider />
 
         <Box m={2}>
-          <Button variant="contained" color="primary" fullWidth>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleOnNextClick}
+          >
             Next
           </Button>
         </Box>

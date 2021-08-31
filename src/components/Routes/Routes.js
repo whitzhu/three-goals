@@ -9,7 +9,7 @@ export default function Routes({ user }) {
         <Homepage />
       </Route>
       <Route exact path="/new">
-        <NewGoal />
+        <NewGoal user={user} />
       </Route>
     </Switch>
   );

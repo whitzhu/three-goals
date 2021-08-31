@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { login } from "../../firebase/firebaseAuthHelper";
+import { login, logout } from "../../firebase/firebaseAuthHelper";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -38,8 +38,8 @@ export default function NavBar({ user }) {
           <Typography variant="h6" className={classes.title}>
             THREE GOALS
           </Typography>
-          <Button color="inherit" onClick={user == null ? login : () => {}}>
-            {user == null ? "Login" : <AccountCircleIcon />}
+          <Button color="inherit" onClick={user == null ? login : logout}>
+            {user == null ? "Login" : "Logout"}
           </Button>
         </Toolbar>
       </AppBar>

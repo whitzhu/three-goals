@@ -1,18 +1,10 @@
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
-export const login = () => {
+export const login = async () => {
   const provider = new GoogleAuthProvider();
   auth.useDeviceLanguage();
-  signInWithPopup(auth, provider).then(({ additionalUserInfo, user }) => {
-    //   if (true || additionalUserInfo?.isNewUser) {
-    //     getAuth()
-    //       .firestore()
-    //       .collection("users")
-    //       .doc(user?.uid)
-    //       .set({ content: [] });
-    //   }
-  });
+  const result = await signInWithPopup(auth, provider);
 };
 
 export const logout = () => signOut(auth);
