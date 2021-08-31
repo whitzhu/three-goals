@@ -5,6 +5,7 @@ import NavBar from "../Navbar/Navbar";
 import theme from "../../util/Theme/Theme";
 import Routes from "../Routes/Routes";
 import { auth } from "../../firebase/firebaseConfig";
+import { GoalsContextProvider } from "../../context/GoalsContext";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,8 +18,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <NavBar user={user} />
-        <Routes user={user} />
+        <GoalsContextProvider>
+          <NavBar user={user} />
+          <Routes user={user} />
+        </GoalsContextProvider>
       </Router>
     </ThemeProvider>
   );
