@@ -7,16 +7,24 @@ import {
   getGoalPromptDescription,
   getGoalTextFieldName,
 } from "../../constants/NewGoalConstants";
-import GoalStepper from "../GoalStepper/GoalStepper";
+import { StyledButton } from "../StyledButton/StyledButton";
 
-export default function NewGoal({ user }) {
+export default function GoalEditor({
+  user,
+  activeStep,
+  handleNext,
+  handleBack,
+}) {
   const [localGoalData, setLocalGoalData] = useState({
     goalName: "",
     threeYearGoalDescription: "",
+    twelveMonthGoalDescription: "",
+    threeMonthGoalDescription: "",
+    goalId: "",
   });
+
   const [errors, setErrors] = useState({});
   const [goalsData, dispatch] = useContext(GoalsContext);
-  const [goalState, setGoalState] = useState(GoalStates.THREE_YEAR);
 
   const handleOnTextFieldChange = (e) => {
     setLocalGoalData({
@@ -26,23 +34,27 @@ export default function NewGoal({ user }) {
   };
 
   const handleOnNextClick = () => {
-    const { goalName, threeYearGoalDescription } = localGoalData;
-    if (validateData()) {
-      dispatch({
-        type: "updateNewGoal",
-        payload: {
-          newGoal: {
-            ...goalsData.newGoal,
-            goalName,
-            threeYearGoalDescription,
-          },
-        },
-      });
-      console.log("saveThreeYearGoal");
-      setGoalState(GoalStates.TWELVE_MONTHS);
-      saveThreeYearGoal(user.uid, goalName, threeYearGoalDescription);
-    }
+    handleNext();
   };
+
+  // const handleOnNextClick = () => {
+  //   const { goalName, threeYearGoalDescription } = localGoalData;
+  //   if (validateData()) {
+  //     dispatch({
+  //       type: "updateNewGoal",
+  //       payload: {
+  //         newGoal: {
+  //           ...goalsData.newGoal,
+  //           goalName,
+  //           threeYearGoalDescription,
+  //         },
+  //       },
+  //     });
+  //     console.log("saveThreeYearGoal");
+  //     handleNext();
+  //     // saveThreeYearGoal(user.uid, goalName, threeYearGoalDescription);
+  //   }
+  // };
 
   const validateData = () => {
     const newErrors = {};
@@ -57,6 +69,20 @@ export default function NewGoal({ user }) {
     setErrors(newErrors);
     return !hasError;
   };
+
+  // const validateData = () => {
+  //   const newErrors = {};
+  //   let hasError = false;
+  //   Object.keys(localGoalData).map((key) => {
+  //     const isEmpty = localGoalData[key] === "";
+  //     newErrors[key] = isEmpty;
+  //     if (isEmpty) {
+  //       hasError = true;
+  //     }
+  //   });
+  //   setErrors(newErrors);
+  //   return !hasError;
+  // };
 
   const renderGoalNameTextField = () => (
     <Box mb={2}>
@@ -73,33 +99,42 @@ export default function NewGoal({ user }) {
       />
     </Box>
   );
+
+  const maybeRenderBackButton = () =>
+    activeStep !== GoalStates.THREE_YEAR && (
+      <Box pr={2} flexGrow="1">
+        <Button fullWidth size="large" color="primary" onClick={handleBack}>
+          Back
+        </Button>
+      </Box>
+    );
+
   return (
-    <Box display="flex" flexDirection="column" mr={2} ml={2} mt={4} mb={4}>
-      <GoalStepper />
+    <Box display="flex" flexDirection="column" mr={2} ml={2} mb={4}>
       <Box mb={4}>
         <Box mb={1}>
           <Typography variant="h1">
-            {goalState === GoalStates.THREE_YEAR
+            {activeStep === GoalStates.THREE_YEAR
               ? "New Goal"
               : goalsData.goalName}
           </Typography>
         </Box>
         <Typography variant="subtitle1">
-          {getGoalPromptDescription(goalState)}
+          {getGoalPromptDescription(activeStep)}
         </Typography>
       </Box>
-      {goalState === GoalStates.THREE_YEAR && renderGoalNameTextField()}
+      {activeStep === GoalStates.THREE_YEAR && renderGoalNameTextField()}
       <Box mb={2}>
         <TextField
           fullWidth
           multiline
           required
           minRows={10}
-          name={getGoalTextFieldName(goalState)}
-          label="Description"
+          name={getGoalTextFieldName(activeStep)}
+          label="Describe"
           variant="outlined"
           placeholder="Describe your goal and why is this important"
-          value={localGoalData.threeYearGoalDescription}
+          value={localGoalData[getGoalTextFieldName(activeStep)]}
           error={errors.threeYearGoalDescription}
           onChange={handleOnTextFieldChange}
         />
@@ -115,15 +150,19 @@ export default function NewGoal({ user }) {
         bgcolor="#fff"
       >
         <Divider />
-        <Box m={2}>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleOnNextClick}
-          >
-            Next
-          </Button>
+        <Box m={2} display="flex">
+          {maybeRenderBackButton()}
+          <Box flexGrow="1">
+            <Button
+              fullWidth
+              size="large"
+              variant="contained"
+              color="primary"
+              onClick={handleOnNextClick}
+            >
+              {activeStep === GoalStates.THREE_MONTHS ? "Save" : "Next"}
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

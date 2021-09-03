@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import Homepage from "../Homepage/Homepage";
-import NewGoal from "../NewGoalFlow/NewGoal";
+import GoalEditorContainer from "../GoalEditorContainer/GoalEditorContainer";
 
 export default function Routes({ user }) {
   return (
@@ -9,7 +9,7 @@ export default function Routes({ user }) {
         <Homepage />
       </Route>
       <Route exact path="/new">
-        <NewGoal user={user} />
+        <GoalEditorContainer user={user} />
       </Route>
     </Switch>
   );
