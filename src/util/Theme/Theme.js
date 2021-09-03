@@ -30,6 +30,7 @@ const theme = createTheme({
     ].join(","),
     h1: {
       fontSize: "2rem",
+      fontWeight: "500",
     },
   },
 });

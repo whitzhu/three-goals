@@ -112,11 +112,11 @@ export default function GoalEditor({
   return (
     <Box display="flex" flexDirection="column" mr={2} ml={2} mb={4}>
       <Box mb={4}>
-        <Box mb={1}>
-          <Typography variant="h1">
+        <Box mb={1} height="200" textOverflow="ellipsis" overflow="hidden">
+          <Typography variant="h1" noWrap>
             {activeStep === GoalStates.THREE_YEAR
               ? "New Goal"
-              : goalsData.goalName}
+              : localGoalData.goalName}
           </Typography>
         </Box>
         <Typography variant="subtitle1">
@@ -134,7 +134,7 @@ export default function GoalEditor({
           label="Describe"
           variant="outlined"
           placeholder="Describe your goal and why is this important"
-          value={localGoalData[getGoalTextFieldName(activeStep)]}
+          value={localGoalData[getGoalTextFieldName(activeStep)] || ""}
           error={errors.threeYearGoalDescription}
           onChange={handleOnTextFieldChange}
         />
