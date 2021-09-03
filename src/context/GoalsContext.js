@@ -6,7 +6,7 @@ export const GoalsContextProvider = (props) => {
   const DEFAULT_GOALS_DATA_STATE = {
     newGoal: {
       goalName: "",
-      threeYearGoalDescription: "",
+      threeYearsGoalDescription: "",
     },
   };
 

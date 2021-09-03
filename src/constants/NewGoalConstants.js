@@ -1,12 +1,12 @@
 export const GoalStates = {
-  THREE_YEAR: "GOAL_STATE_THREE_YEAR",
+  THREE_YEARS: "GOAL_STATE_THREE_YEARS",
   TWELVE_MONTHS: "GOAL_STATE_TWELVE_MONTHS",
   THREE_MONTHS: "GOAL_STATE_THREE_MONTHS",
 };
 
 export const getStepperTitle = (step) => {
   switch (step) {
-    case GoalStates.THREE_YEAR:
+    case GoalStates.THREE_YEARS:
       return "3 Years";
     case GoalStates.TWELVE_MONTHS:
       return "12 Months";
@@ -19,7 +19,7 @@ export const getStepperTitle = (step) => {
 
 export const getGoalPromptDescription = (state) => {
   switch (state) {
-    case GoalStates.THREE_YEAR:
+    case GoalStates.THREE_YEARS:
       return "What is one goal you would like to accomplish in the next 3 years?";
     case GoalStates.TWELVE_MONTHS:
       return "What do I need to do in the next 12 months  to  accomplish this  goal in 3 years?";
@@ -32,8 +32,8 @@ export const getGoalPromptDescription = (state) => {
 
 export const getGoalTextFieldName = (state) => {
   switch (state) {
-    case GoalStates.THREE_YEAR:
-      return "threeYearGoalDescription";
+    case GoalStates.THREE_YEARS:
+      return "threeYearsGoalDescription";
     case GoalStates.TWELVE_MONTHS:
       return "twelveMonthsGoalDescription";
     case GoalStates.THREE_MONTHS:

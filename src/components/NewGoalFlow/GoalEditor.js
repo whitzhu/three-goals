@@ -7,7 +7,6 @@ import {
   getGoalPromptDescription,
   getGoalTextFieldName,
 } from "../../constants/NewGoalConstants";
-import { StyledButton } from "../StyledButton/StyledButton";
 
 export default function GoalEditor({
   user,
@@ -17,8 +16,8 @@ export default function GoalEditor({
 }) {
   const [localGoalData, setLocalGoalData] = useState({
     goalName: "",
-    threeYearGoalDescription: "",
-    twelveMonthGoalDescription: "",
+    threeYearsGoalDescription: "",
+    twelveMonthsGoalDescription: "",
     threeMonthGoalDescription: "",
     goalId: "",
   });
@@ -34,11 +33,13 @@ export default function GoalEditor({
   };
 
   const handleOnNextClick = () => {
-    handleNext();
+    if (validateData()) {
+      handleNext();
+    }
   };
 
   // const handleOnNextClick = () => {
-  //   const { goalName, threeYearGoalDescription } = localGoalData;
+  //   const { goalName, threeYearsGoalDescription } = localGoalData;
   //   if (validateData()) {
   //     dispatch({
   //       type: "updateNewGoal",
@@ -46,43 +47,31 @@ export default function GoalEditor({
   //         newGoal: {
   //           ...goalsData.newGoal,
   //           goalName,
-  //           threeYearGoalDescription,
+  //           threeYearsGoalDescription,
   //         },
   //       },
   //     });
   //     console.log("saveThreeYearGoal");
   //     handleNext();
-  //     // saveThreeYearGoal(user.uid, goalName, threeYearGoalDescription);
+  //     // saveThreeYearGoal(user.uid, goalName, threeYearsGoalDescription);
   //   }
   // };
 
   const validateData = () => {
     const newErrors = {};
     let hasError = false;
-    Object.keys(localGoalData).map((key) => {
-      const isEmpty = localGoalData[key] === "";
-      newErrors[key] = isEmpty;
-      if (isEmpty) {
-        hasError = true;
-      }
-    });
+    if (localGoalData.goalName === "") {
+      newErrors["goalName"] = true;
+      hasError = true;
+    }
+    const descriptionText = localGoalData[getGoalTextFieldName(activeStep)];
+    if (!descriptionText || descriptionText === "") {
+      newErrors[getGoalTextFieldName(activeStep)] = true;
+      hasError = true;
+    }
     setErrors(newErrors);
     return !hasError;
   };
-
-  // const validateData = () => {
-  //   const newErrors = {};
-  //   let hasError = false;
-  //   Object.keys(localGoalData).map((key) => {
-  //     const isEmpty = localGoalData[key] === "";
-  //     newErrors[key] = isEmpty;
-  //     if (isEmpty) {
-  //       hasError = true;
-  //     }
-  //   });
-  //   setErrors(newErrors);
-  //   return !hasError;
-  // };
 
   const renderGoalNameTextField = () => (
     <Box mb={2}>
@@ -101,7 +90,7 @@ export default function GoalEditor({
   );
 
   const maybeRenderBackButton = () =>
-    activeStep !== GoalStates.THREE_YEAR && (
+    activeStep !== GoalStates.THREE_YEARS && (
       <Box pr={2} flexGrow="1">
         <Button fullWidth size="large" color="primary" onClick={handleBack}>
           Back
@@ -114,7 +103,7 @@ export default function GoalEditor({
       <Box mb={4}>
         <Box mb={1} height="200" textOverflow="ellipsis" overflow="hidden">
           <Typography variant="h1" noWrap>
-            {activeStep === GoalStates.THREE_YEAR
+            {activeStep === GoalStates.THREE_YEARS
               ? "New Goal"
               : localGoalData.goalName}
           </Typography>
@@ -123,7 +112,7 @@ export default function GoalEditor({
           {getGoalPromptDescription(activeStep)}
         </Typography>
       </Box>
-      {activeStep === GoalStates.THREE_YEAR && renderGoalNameTextField()}
+      {activeStep === GoalStates.THREE_YEARS && renderGoalNameTextField()}
       <Box mb={2}>
         <TextField
           fullWidth
@@ -135,7 +124,7 @@ export default function GoalEditor({
           variant="outlined"
           placeholder="Describe your goal and why is this important"
           value={localGoalData[getGoalTextFieldName(activeStep)] || ""}
-          error={errors.threeYearGoalDescription}
+          error={errors[getGoalTextFieldName(activeStep)] || false}
           onChange={handleOnTextFieldChange}
         />
       </Box>

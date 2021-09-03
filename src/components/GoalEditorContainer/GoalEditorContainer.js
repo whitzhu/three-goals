@@ -99,7 +99,7 @@ export default function GoalEditorContainer({ user }) {
   const classes = useStyles();
   const [activeStepIndex, setActiveStepIndex] = React.useState(1);
   const steps = [
-    GoalStates.THREE_YEAR,
+    GoalStates.THREE_YEARS,
     GoalStates.TWELVE_MONTHS,
     GoalStates.THREE_MONTHS,
   ];

@@ -12,11 +12,11 @@ import GoalStepper from "../GoalStepper/GoalStepper";
 export default function NewGoal({ user }) {
   const [localGoalData, setLocalGoalData] = useState({
     goalName: "",
-    threeYearGoalDescription: "",
+    threeYearsGoalDescription: "",
   });
   const [errors, setErrors] = useState({});
   const [goalsData, dispatch] = useContext(GoalsContext);
-  const [goalState, setGoalState] = useState(GoalStates.THREE_YEAR);
+  const [goalState, setGoalState] = useState(GoalStates.THREE_YEARS);
 
   const handleOnTextFieldChange = (e) => {
     setLocalGoalData({
@@ -26,7 +26,7 @@ export default function NewGoal({ user }) {
   };
 
   const handleOnNextClick = () => {
-    const { goalName, threeYearGoalDescription } = localGoalData;
+    const { goalName, threeYearsGoalDescription } = localGoalData;
     if (validateData()) {
       dispatch({
         type: "updateNewGoal",
@@ -34,13 +34,13 @@ export default function NewGoal({ user }) {
           newGoal: {
             ...goalsData.newGoal,
             goalName,
-            threeYearGoalDescription,
+            threeYearsGoalDescription,
           },
         },
       });
       console.log("saveThreeYearGoal");
       setGoalState(GoalStates.TWELVE_MONTHS);
-      saveThreeYearGoal(user.uid, goalName, threeYearGoalDescription);
+      saveThreeYearGoal(user.uid, goalName, threeYearsGoalDescription);
     }
   };
 
@@ -79,7 +79,7 @@ export default function NewGoal({ user }) {
       <Box mb={4}>
         <Box mb={1}>
           <Typography variant="h1">
-            {goalState === GoalStates.THREE_YEAR
+            {goalState === GoalStates.THREE_YEARS
               ? "New Goal"
               : goalsData.goalName}
           </Typography>
@@ -88,7 +88,7 @@ export default function NewGoal({ user }) {
           {getGoalPromptDescription(goalState)}
         </Typography>
       </Box>
-      {goalState === GoalStates.THREE_YEAR && renderGoalNameTextField()}
+      {goalState === GoalStates.THREE_YEARS && renderGoalNameTextField()}
       <Box mb={2}>
         <TextField
           fullWidth
@@ -99,8 +99,8 @@ export default function NewGoal({ user }) {
           label="Description"
           variant="outlined"
           placeholder="Describe your goal and why is this important"
-          value={localGoalData.threeYearGoalDescription}
-          error={errors.threeYearGoalDescription}
+          value={localGoalData.threeYearsGoalDescription}
+          error={errors.threeYearsGoalDescription}
           onChange={handleOnTextFieldChange}
         />
       </Box>
