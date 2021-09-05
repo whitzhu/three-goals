@@ -15,7 +15,7 @@ import GoalEditor from "../NewGoalFlow/GoalEditor";
 import { GoalStates, getStepperTitle } from "../../constants/NewGoalConstants";
 import { StyledButton } from "../StyledButton/StyledButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { Box, IconButton } from "@material-ui/core";
+import { Box, Divider, IconButton } from "@material-ui/core";
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -107,7 +107,9 @@ export default function GoalEditorContainer({ user }) {
   const getActiveStepState = () => steps[activeStepIndex];
 
   const handleNext = () => {
-    setActiveStepIndex((prevActiveStepIndex) => prevActiveStepIndex + 1);
+    if (activeStepIndex < steps.length - 1) {
+      setActiveStepIndex((prevActiveStepIndex) => prevActiveStepIndex + 1);
+    }
   };
 
   const handleBack = () => {
@@ -133,6 +135,7 @@ export default function GoalEditorContainer({ user }) {
           </Step>
         ))}
       </Stepper>
+      <Divider />
       <div>
         <Typography className={classes.instructions}>
           <GoalEditor

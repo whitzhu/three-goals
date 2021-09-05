@@ -98,8 +98,26 @@ export default function GoalEditor({
       </Box>
     );
 
+  const mayRenderPreviousGoalDescription = () => {
+    if (activeStep === GoalStates.THREE_YEARS) {
+      return;
+    }
+
+    let content;
+    if (activeStep === GoalStates.TWELVE_MONTHS) {
+      content = localGoalData.threeYearsGoalDescription;
+    } else if (activeStep === GoalStates.THREE_MONTHS) {
+      content = localGoalData.threeMonthGoalDescription;
+    }
+    return (
+      <Typography colo variant="subtitle1">
+        {content}
+      </Typography>
+    );
+  };
+
   return (
-    <Box display="flex" flexDirection="column" mr={2} ml={2} mb={4}>
+    <Box display="flex" flexDirection="column" mr={2} ml={2} mb={4} mt={2}>
       <Box mb={4}>
         <Box mb={1} height="200" textOverflow="ellipsis" overflow="hidden">
           <Typography variant="h1" noWrap>
@@ -108,9 +126,7 @@ export default function GoalEditor({
               : localGoalData.goalName}
           </Typography>
         </Box>
-        <Typography variant="subtitle1">
-          {getGoalPromptDescription(activeStep)}
-        </Typography>
+        {mayRenderPreviousGoalDescription()}
       </Box>
       {activeStep === GoalStates.THREE_YEARS && renderGoalNameTextField()}
       <Box mb={2}>
@@ -120,9 +136,8 @@ export default function GoalEditor({
           required
           minRows={10}
           name={getGoalTextFieldName(activeStep)}
-          label="Describe"
+          label={getGoalPromptDescription(activeStep)}
           variant="outlined"
-          placeholder="Describe your goal and why is this important"
           value={localGoalData[getGoalTextFieldName(activeStep)] || ""}
           error={errors[getGoalTextFieldName(activeStep)] || false}
           onChange={handleOnTextFieldChange}
@@ -138,7 +153,6 @@ export default function GoalEditor({
         width={1}
         bgcolor="#fff"
       >
-        <Divider />
         <Box m={2} display="flex">
           {maybeRenderBackButton()}
           <Box flexGrow="1">
