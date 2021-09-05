@@ -7,6 +7,9 @@ export const GoalsContextProvider = (props) => {
     newGoal: {
       goalName: "",
       threeYearsGoalDescription: "",
+      twelveMonthsGoalDescription: "",
+      threeMonthGoalDescription: "",
+      goalId: "",
     },
   };
 
@@ -15,7 +18,10 @@ export const GoalsContextProvider = (props) => {
       case "updateNewGoal":
         return {
           ...state,
-          ...action.payload,
+          newGoal: {
+            ...state.newGoal,
+            ...action.payload,
+          },
         };
       default:
         throw new Error();

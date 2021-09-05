@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import Homepage from "../Homepage/Homepage";
-import GoalEditorContainer from "../GoalEditorContainer/GoalEditorContainer";
+import GoalEditorContainer from "../NewGoalFlow/GoalEditorContainer";
 
 export default function Routes({ user }) {
   return (
