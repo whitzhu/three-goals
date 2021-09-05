@@ -12,6 +12,7 @@ import {
 import GoalConfirmation from "./GoalConfirmation";
 import { GoalsContext } from "../../context/GoalsContext";
 import NewGoalStepper from "./NewGoalStepper";
+import { saveNewGoal } from "../../firebase/firebaseGoalHelper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,10 +65,13 @@ export default function GoalEditorContainer({ user }) {
     return !hasError;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateData()) {
       if (getActiveStepState() === GoalStates.THREE_MONTHS) {
-        console.log("SAVE");
+        const resultId = await saveNewGoal(user.uid, newGoal);
+        if (!resultId) {
+          return;
+        }
       }
       if (activeStepIndex === NewGoalStepsOrder.length - 1) {
         history.push("/home");

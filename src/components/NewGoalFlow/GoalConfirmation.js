@@ -7,15 +7,15 @@ export default function GoalConfirmation() {
   const [{ newGoal }] = useContext(GoalsContext);
   return (
     <Box pt={4} pr={2} pl={2}>
-      <Box textAlign="center" mb={4}>
+      <Box component="div" textAlign="center" mb={4}>
         <Box mb={4}>
           <CheckCircleOutline fontSize="large" />
         </Box>
         <Typography variant="h4">You've added your first goal</Typography>
       </Box>
-      <Paper variant="outlined">
+      <Paper component="div" variant="outlined">
         <Box m={2}>
-          <Box mb={2} textAlign="center">
+          <Box component="div" mb={2} textAlign="center">
             <Typography variant="h1">{newGoal.goalName}</Typography>
           </Box>
           <Box component="div" mb={2}>
@@ -26,7 +26,7 @@ export default function GoalConfirmation() {
               </Typography>
             </Box>
           </Box>
-          <Box mb={2}>
+          <Box component="div" mb={2}>
             <Typography variant="h5">12 Months</Typography>
             <Box component="div" color="text.secondary">
               <Typography variant="body1">
@@ -34,7 +34,7 @@ export default function GoalConfirmation() {
               </Typography>
             </Box>
           </Box>
-          <Box mb={2}>
+          <Box component="div" mb={2}>
             <Typography variant="h5">3 Months</Typography>
             <Box component="div" color="text.secondary">
               <Typography variant="body1">

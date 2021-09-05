@@ -9,7 +9,6 @@ export const GoalsContextProvider = (props) => {
       threeYearsGoalDescription: "",
       twelveMonthsGoalDescription: "",
       threeMonthGoalDescription: "",
-      goalId: "",
     },
   };
 
