@@ -32,6 +32,22 @@ const theme = createTheme({
       fontSize: "2rem",
       fontWeight: "500",
     },
+    h2: {
+      fontSize: "1.6rem",
+      fontWeight: "500",
+    },
+    h3: {
+      fontSize: "1.4rem",
+      fontWeight: "500",
+    },
+    h4: {
+      fontSize: "1.2rem",
+      fontWeight: "500",
+    },
+    h5: {
+      fontSize: "1rem",
+      fontWeight: "700",
+    },
   },
 });
 
