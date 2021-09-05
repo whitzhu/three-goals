@@ -5,6 +5,13 @@ export const GoalStates = {
   SETUP_CONFIRMATION: "GOAL_STATE_SETUP_CONFIRMATION",
 };
 
+export const NewGoalStepsOrder = [
+  GoalStates.THREE_YEARS,
+  GoalStates.TWELVE_MONTHS,
+  GoalStates.THREE_MONTHS,
+  GoalStates.SETUP_CONFIRMATION,
+];
+
 export const getStepperTitle = (step) => {
   switch (step) {
     case GoalStates.THREE_YEARS:
