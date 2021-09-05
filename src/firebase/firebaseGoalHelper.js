@@ -8,15 +8,10 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebaseConfig";
 
-export const saveThreeYearGoal = async (
-  userId,
-  goalName,
-  threeYearsGoalDescription
-) => {
+export const saveNewGoal = async (userId, data) => {
   const docRef = collection(db, "goals", userId, "goals");
   const result = await addDoc(docRef, {
-    goalName: "woah",
-    threeYearsGoalDescription: threeYearsGoalDescription,
+    ...data,
     dateExample: Timestamp.fromDate(new Date()),
   });
   console.log("result", result);

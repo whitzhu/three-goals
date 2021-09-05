@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Divider, Typography, Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 import GoalEditor from "./GoalEditor";
 import {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function GoalEditorContainer({ user }) {
+  let history = useHistory();
   const classes = useStyles();
   const [activeStepIndex, setActiveStepIndex] = React.useState(1);
   const [errors, setErrors] = useState({});
@@ -50,10 +52,13 @@ export default function GoalEditorContainer({ user }) {
       newErrors["goalName"] = true;
       hasError = true;
     }
-    const descriptionText = newGoal[getGoalTextFieldName(getActiveStepState())];
-    if (descriptionText === undefined || descriptionText === "") {
-      newErrors[getGoalTextFieldName(getActiveStepState())] = true;
-      hasError = true;
+    if (getActiveStepState() !== GoalStates.SETUP_CONFIRMATION) {
+      const descriptionText =
+        newGoal[getGoalTextFieldName(getActiveStepState())];
+      if (descriptionText === undefined || descriptionText === "") {
+        newErrors[getGoalTextFieldName(getActiveStepState())] = true;
+        hasError = true;
+      }
     }
     setErrors(newErrors);
     return !hasError;
@@ -61,6 +66,12 @@ export default function GoalEditorContainer({ user }) {
 
   const handleNext = () => {
     if (validateData()) {
+      if (getActiveStepState() === GoalStates.THREE_MONTHS) {
+        console.log("SAVE");
+      }
+      if (activeStepIndex === NewGoalStepsOrder.length - 1) {
+        history.push("/home");
+      }
       setActiveStepIndex((prevActiveStepIndex) => prevActiveStepIndex + 1);
     }
   };
@@ -110,7 +121,7 @@ export default function GoalEditorContainer({ user }) {
             color="primary"
             onClick={handleNext}
           >
-            {getActiveStepState === GoalStates.THREE_MONTHS ? "Save" : "Next"}
+            {getActiveStepState() === GoalStates.THREE_MONTHS ? "Save" : "Next"}
           </Button>
         </Box>
       </Box>
@@ -118,7 +129,9 @@ export default function GoalEditorContainer({ user }) {
   );
 
   const maybeRenderBackButton = () =>
-    getActiveStepState() !== GoalStates.THREE_YEARS && (
+    ![GoalStates.THREE_YEARS, GoalStates.SETUP_CONFIRMATION].includes(
+      getActiveStepState()
+    ) && (
       <Box pr={2} flexGrow="1">
         <Button fullWidth size="large" color="primary" onClick={handleBack}>
           Back

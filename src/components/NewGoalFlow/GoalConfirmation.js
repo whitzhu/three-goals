@@ -8,7 +8,9 @@ export default function GoalConfirmation() {
   return (
     <Box pt={4} pr={2} pl={2}>
       <Box textAlign="center" mb={4}>
-        <CheckCircleOutline fontSize="large" />
+        <Box mb={4}>
+          <CheckCircleOutline fontSize="large" />
+        </Box>
         <Typography variant="h4">You've added your first goal</Typography>
       </Box>
       <Paper variant="outlined">
@@ -16,9 +18,9 @@ export default function GoalConfirmation() {
           <Box mb={2} textAlign="center">
             <Typography variant="h1">{newGoal.goalName}</Typography>
           </Box>
-          <Box mb={2}>
+          <Box component="div" mb={2}>
             <Typography variant="h5">3 Years</Typography>
-            <Box color="text.secondary">
+            <Box component="div" color="text.secondary">
               <Typography variant="body1">
                 {newGoal.threeYearsGoalDescription}
               </Typography>
@@ -26,7 +28,7 @@ export default function GoalConfirmation() {
           </Box>
           <Box mb={2}>
             <Typography variant="h5">12 Months</Typography>
-            <Box color="text.secondary">
+            <Box component="div" color="text.secondary">
               <Typography variant="body1">
                 {newGoal.twelveMonthsGoalDescription}
               </Typography>
@@ -34,7 +36,7 @@ export default function GoalConfirmation() {
           </Box>
           <Box mb={2}>
             <Typography variant="h5">3 Months</Typography>
-            <Box color="text.secondary">
+            <Box component="div" color="text.secondary">
               <Typography variant="body1">
                 {newGoal.threeMonthsGoalDescription}
               </Typography>

@@ -5,7 +5,7 @@ import GoalEditorContainer from "../NewGoalFlow/GoalEditorContainer";
 export default function Routes({ user }) {
   return (
     <Switch>
-      <Route exact path="/">
+      <Route exact path="/home">
         <Homepage />
       </Route>
       <Route exact path="/new">
