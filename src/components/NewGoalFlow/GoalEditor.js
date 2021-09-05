@@ -1,10 +1,21 @@
 import React from "react";
 import { Box, TextField, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   GoalStates,
   getGoalPromptDescription,
   getGoalTextFieldName,
 } from "../../constants/NewGoalConstants";
+
+const useStyles = makeStyles({
+  customBox: {
+    display: "-webkit-box",
+    boxOrient: "vertical",
+    lineClamp: 3,
+    wordBreak: "break",
+    overflow: "hidden",
+  },
+});
 
 export default function GoalEditor({
   data,
@@ -12,6 +23,7 @@ export default function GoalEditor({
   activeStep,
   handleOnTextFieldChange,
 }) {
+  const classes = useStyles();
   const renderTitle = () => (
     <Box height="200" textOverflow="ellipsis" overflow="hidden">
       <Typography variant="h1" noWrap>
@@ -52,9 +64,14 @@ export default function GoalEditor({
         return;
     }
     return (
-      <Typography colo variant="subtitle1">
-        {content}
-      </Typography>
+      <Box
+        classes={{ root: classes.customBox }}
+        mt={1}
+        component="div"
+        color="text.secondary"
+      >
+        <Typography variant="body1">{content}</Typography>
+      </Box>
     );
   };
 
