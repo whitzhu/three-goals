@@ -8,6 +8,7 @@ import {
   markQuickEntryForDay,
 } from "../../firebase/firebaseGoalHelper";
 import { GoalsContext } from "../../context/GoalsContext";
+import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,6 +81,7 @@ export default function Homepage({ user }) {
 
   return (
     <div className={classes.root}>
+      <HeaderCalendar />
       <Box
         display="flex"
         flexDirection="column"
