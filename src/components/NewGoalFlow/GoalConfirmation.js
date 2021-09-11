@@ -3,6 +3,7 @@ import { Box, Paper, Typography } from "@material-ui/core";
 import { GoalsContext } from "../../context/GoalsContext";
 import CheckCircleOutline from "@material-ui/icons/CheckCircleOutline";
 import { makeStyles } from "@material-ui/core/styles";
+
 const useStyles = makeStyles({
   customBox: {
     display: "-webkit-box",

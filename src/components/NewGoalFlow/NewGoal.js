@@ -38,7 +38,6 @@ export default function NewGoal({ user }) {
           },
         },
       });
-      console.log("saveThreeYearGoal");
       setGoalState(GoalStates.TWELVE_MONTHS);
       saveThreeYearGoal(user.uid, goalName, threeYearsGoalDescription);
     }

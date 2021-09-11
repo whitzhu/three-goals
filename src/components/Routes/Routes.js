@@ -6,7 +6,7 @@ export default function Routes({ user }) {
   return (
     <Switch>
       <Route exact path="/home">
-        <Homepage />
+        <Homepage user={user} />
       </Route>
       <Route exact path="/new">
         <GoalEditorContainer user={user} />

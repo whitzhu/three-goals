@@ -8,11 +8,13 @@ export const GoalsContextProvider = (props) => {
       goalName: "",
       threeYearsGoalDescription: "",
       twelveMonthsGoalDescription: "",
-      threeMonthGoalDescription: "",
+      threeMonthsGoalDescription: "",
     },
+    goalEntries: [],
   };
 
   function goalReducer(state, action) {
+    console.log("goalReducer action.payload", action.payload);
     switch (action.type) {
       case "updateNewGoal":
         return {
@@ -21,6 +23,11 @@ export const GoalsContextProvider = (props) => {
             ...state.newGoal,
             ...action.payload,
           },
+        };
+      case "updateGoalsEntries":
+        return {
+          ...state,
+          ...action.payload,
         };
       default:
         throw new Error();
