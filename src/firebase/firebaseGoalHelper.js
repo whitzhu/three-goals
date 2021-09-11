@@ -14,22 +14,51 @@ export const fetchAllGoals = async (userId, dispatch) => {
   const querySnapshot = await getDocs(
     collection(db, "goals", userId, "top_three_goals")
   );
-  const goalEntries = [];
+  const goals = [];
   querySnapshot.forEach((doc) => {
-    goalEntries.push({ ...doc.data(), id: doc.id });
+    goals.push({ ...doc.data(), id: doc.id });
   });
   dispatch({
-    type: "updateGoalsEntries",
+    type: "updateGoalsList",
     payload: {
-      goalEntries,
+      goals,
     },
   });
 };
 
-export const markQuickEntryForDay = async (userId, goalId, data) => {
+export const fetchAllEntries = async (userId, dispatch) => {
+  const docRef = doc(db, "goals", userId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists() && docSnap.data()) {
+    dispatch({
+      type: "updateEntriesList",
+      payload: {
+        ...docSnap.data(),
+      },
+    });
+  } else {
+    console.log("No such document!");
+  }
+};
+
+export const markQuickEntryForDay = async (
+  dispatch,
+  userId,
+  date,
+  goalId,
+  hasEntry
+) => {
   const docRef = doc(db, "goals", userId);
   await updateDoc(docRef, {
-    entries: data,
+    [`entries.${date}.${goalId}.hasEntry`]: hasEntry,
+  });
+  dispatch({
+    type: "updateHasEntry",
+    payload: {
+      date,
+      goalId,
+      hasEntry,
+    },
   });
 };
 

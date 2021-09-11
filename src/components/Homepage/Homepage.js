@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { Box, Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 import {
   fetchAllGoals,
+  fetchAllEntries,
   markQuickEntryForDay,
 } from "../../firebase/firebaseGoalHelper";
 import { GoalsContext } from "../../context/GoalsContext";
@@ -24,22 +26,24 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.dark,
     },
   },
+  isCompleted: {
+    "& .MuiButton-label": {
+      backgroundColor: theme.palette.success.dark,
+    },
+  },
 }));
 
 export default function Homepage({ user }) {
   const classes = useStyles();
-  const [{ goalEntries }, dispatch] = useContext(GoalsContext);
+  const [{ goals, entries }, dispatch] = useContext(GoalsContext);
   const date = new Date();
-  var options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  };
+  const entryDate = date.toISOString().split("T")[0]; // format: YYYY-MM-DD
 
   useEffect(() => {
     async function fetchGoal() {
       try {
         await fetchAllGoals(user.uid, dispatch);
+        await fetchAllEntries(user.uid, dispatch);
       } catch (e) {
         console.error("Fetch All Goals Error:", e);
       }
@@ -48,27 +52,31 @@ export default function Homepage({ user }) {
     fetchGoal();
   }, [user]);
 
-  const handleQuickGoalMaker = (goalId) => {
-    const shortDate = date.toLocaleDateString("en-US"); // format: MM/DD/YYYY
-    markQuickEntryForDay(user.uid, goalId, {
-      [shortDate]: {
-        [goalId]: {
-          hasEntry: true,
-        },
-      },
-    });
+  const handleQuickGoalMaker = async (goalId, hasEntry) => {
+    await markQuickEntryForDay(
+      dispatch,
+      user.uid,
+      entryDate,
+      goalId,
+      !hasEntry
+    );
   };
 
-  const renderQuickGoalMarker = (goal) => (
-    <Grid item xs={6}>
-      <Button
-        className={classes.button}
-        onClick={() => handleQuickGoalMaker(goal.id)}
-      >
-        <Box p={5}>{goal.goalName}</Box>
-      </Button>
-    </Grid>
-  );
+  const renderQuickGoalMarker = (goal) => {
+    const hasEntry = entries[entryDate]?.[goal.id]?.hasEntry || false;
+    return (
+      <Grid item xs={6}>
+        <Button
+          className={clsx(classes.button, {
+            [classes.isCompleted]: hasEntry,
+          })}
+          onClick={() => handleQuickGoalMaker(goal.id, hasEntry)}
+        >
+          <Box p={5}>{goal.goalName}</Box>
+        </Button>
+      </Grid>
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -85,14 +93,18 @@ export default function Homepage({ user }) {
           }).format(date)}
         </Typography>
         <Typography variant="h5">
-          {date.toLocaleDateString("en-US", options)}
+          {date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
         </Typography>
       </Box>
       <Box display="flex">
         <Grid container spacing={1}>
-          {goalEntries &&
-            goalEntries.length > 0 &&
-            goalEntries.map((goal) => renderQuickGoalMarker(goal))}
+          {goals &&
+            goals.length > 0 &&
+            goals.map((goal) => renderQuickGoalMarker(goal))}
         </Grid>
       </Box>
     </div>
