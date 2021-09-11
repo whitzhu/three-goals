@@ -49,10 +49,12 @@ export default function Homepage({ user }) {
   }, [user]);
 
   const handleQuickGoalMaker = (goalId) => {
-    console.log("handleQuickGoalMaker goalId", goalId);
+    const shortDate = date.toLocaleDateString("en-US"); // format: MM/DD/YYYY
     markQuickEntryForDay(user.uid, goalId, {
-      "10/2/2021": {
-        hasEntry: true,
+      [shortDate]: {
+        [goalId]: {
+          hasEntry: true,
+        },
       },
     });
   };

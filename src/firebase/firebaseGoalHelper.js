@@ -27,7 +27,7 @@ export const fetchAllGoals = async (userId, dispatch) => {
 };
 
 export const markQuickEntryForDay = async (userId, goalId, data) => {
-  const docRef = doc(db, "goals", userId, "top_three_goals", goalId);
+  const docRef = doc(db, "goals", userId);
   await updateDoc(docRef, {
     entries: data,
   });
