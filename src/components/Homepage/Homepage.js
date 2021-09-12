@@ -9,6 +9,7 @@ import {
 } from "../../firebase/firebaseGoalHelper";
 import { GoalsContext } from "../../context/GoalsContext";
 import HeaderCalendar from "../HeaderCalendar/HeaderCalendar";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Homepage({ user }) {
+  const history = useHistory();
   const classes = useStyles();
   const [{ goals, entries }, dispatch] = useContext(GoalsContext);
   const date = new Date();
@@ -63,6 +65,10 @@ export default function Homepage({ user }) {
     );
   };
 
+  const routeToWeekEntry = (goalId) => {
+    history.push(`/week/${goalId}`);
+  };
+
   const renderQuickGoalMarker = (goal) => {
     const hasEntry = entries[entryDate]?.[goal.id]?.hasEntry || false;
     return (
@@ -71,7 +77,7 @@ export default function Homepage({ user }) {
           className={clsx(classes.button, {
             [classes.isCompleted]: hasEntry,
           })}
-          onClick={() => handleQuickGoalMaker(goal.id, hasEntry)}
+          onClick={() => routeToWeekEntry(goal.id, hasEntry)}
         >
           <Box p={5}>{goal.goalName}</Box>
         </Button>

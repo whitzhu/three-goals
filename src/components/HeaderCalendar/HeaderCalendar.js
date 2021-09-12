@@ -56,7 +56,6 @@ export default function HeaderCalendar() {
   }
 
   const handleDayClicked = (day) => {
-    console.log("day", day);
     setSelectedDate(day);
   };
 

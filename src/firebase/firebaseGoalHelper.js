@@ -70,3 +70,10 @@ export const saveNewGoal = async (userId, data) => {
   });
   return result.id;
 };
+
+export const saveWeekEntry = async (week, goalId, entry) => {
+  // const docRef = doc(db, "goals", userId);
+  // await updateDoc(docRef, {
+  //   [`entries.${week}.${goalId}.entry`]: entry,
+  // });
+};
