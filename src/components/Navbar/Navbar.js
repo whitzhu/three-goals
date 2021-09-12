@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,6 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { login, logout } from "../../firebase/firebaseAuthHelper";
+import { AuthContext } from "../../context/AuthContext";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar({ user }) {
+export default function NavBar() {
   const classes = useStyles();
+  const [{ user }] = useContext(AuthContext);
 
   return (
     <div className={classes.root}>
