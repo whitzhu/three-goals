@@ -4,16 +4,18 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import { GoalsContext } from "../../context/GoalsContext";
 import { saveWeekEntry } from "../../firebase/firebaseGoalHelper";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function GoalWeekEntry() {
   const { goalId } = useParams();
   const [{ goals, entries }] = useContext(GoalsContext);
+  const [{ user }] = useContext(AuthContext);
   const [currentGoal, setCurrentGoal] = useState();
   const [currentEntries, setCurrentEntries] = useState();
   const [weekEntry, setWeekEntry] = useState();
   const today = moment();
-  const startDate = moment(today.startOf("week")).format("MM.DD");
-  const endDate = moment(today.endOf("week")).format("MM.DD");
+  const startDate = moment(today.startOf("week")).format("MMM DD, YY");
+  const endDate = moment(today.endOf("week")).format("MMM DD, YY");
   var weekRange = `${startDate} - ${endDate}`;
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function GoalWeekEntry() {
   }, []);
 
   const handleOnClick = async () => {
-    // await saveWeekEntry(user.id, weekRange, goalId, weekEntry);
+    await saveWeekEntry(user.uid, weekRange, goalId, weekEntry);
   };
 
   return (
